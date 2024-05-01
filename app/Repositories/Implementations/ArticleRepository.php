@@ -32,10 +32,9 @@ class ArticleRepository implements ArticleRepositoryInterface
 
     public function getLatestNews()
     {
-        $resource = Article::where('date_expiration', '>', now())
-        ->orderBy('date_debut', 'desc')
-        ->get();
+        $resource = Article::where('expiration_date', '>', now())
+            ->orderBy('created_at')
+            ->get();
         return $resource;
     }
 }
-

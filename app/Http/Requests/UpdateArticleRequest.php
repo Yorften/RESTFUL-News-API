@@ -22,11 +22,10 @@ class UpdateArticleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'titre' => 'required',
-            'contenu' => 'required',
-            'categorie_id' => 'required',
-            'date_debut' => 'required',
-            'date_expiration' => 'required'
+            'title' => 'sometimes|string',
+            'content' => 'sometimes|string',
+            'category_id' => 'sometimes|integer',
+            'expiration_date' => 'sometimes|date'
         ];
     }
 }

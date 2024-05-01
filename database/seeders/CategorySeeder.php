@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Categorie;
+use App\Models\Category;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -22,75 +22,75 @@ class CategorySeeder extends Seeder
         ];
 
         foreach ($categories as $category) {
-            Categorie::create([
+            Category::create([
                 'name' => $category,
             ]);
         }
 
-        Categorie::create([
+        Category::create([
             'name' => 'Politique',
             'parent_id'=> 1,
         ]);
-        Categorie::create([
+        Category::create([
             'name' => 'Économie',
             'parent_id'=> 1,
         ]);
-        Categorie::create([
+        Category::create([
             'name' => 'Sport',
             'parent_id'=> 1,
         ]);
-        Categorie::create([
+        Category::create([
             'name' => 'Cinéma',
             'parent_id'=> 2,
         ]);
-        Categorie::create([
+        Category::create([
             'name' => 'Musique',
             'parent_id'=> 2,
         ]);
-        Categorie::create([
+        Category::create([
             'name' => 'Sorties',
             'parent_id'=> 2,
         ]);
-        Categorie::create([
+        Category::create([
             'name' => 'Informatique',
             'parent_id'=> 3,
         ]);
-        Categorie::create([
+        Category::create([
             'name' => 'Gadgets',
             'parent_id'=> 3,
         ]);
-        Categorie::create([
+        Category::create([
             'name' => 'Médecine',
             'parent_id'=> 4,
         ]);
-        Categorie::create([
+        Category::create([
             'name' => 'Bien-être',
             'parent_id'=> 4,
         ]);
   
 
 
-        Categorie::create([
+        Category::create([
             'name' => 'Ordinateurs de bureau',
             'parent_id'=> 11,
         ]);
-        Categorie::create([
+        Category::create([
             'name' => 'PC portable', 
             'parent_id'=> 11,
         ]);
-        Categorie::create([
+        Category::create([
             'name' => 'Connexion internet',
             'parent_id'=> 11,
         ]);
-        Categorie::create([
+        Category::create([
             'name' => 'Smartphones',
             'parent_id'=> 12,
         ]);
-        Categorie::create([
+        Category::create([
             'name' => 'Tablettes',
             'parent_id'=> 12,
         ]);
-        Categorie::create([
+        Category::create([
             'name' => 'Jeux vidéo',
             'parent_id'=> 12,
         ]);        

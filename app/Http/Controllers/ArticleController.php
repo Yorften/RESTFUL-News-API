@@ -3,71 +3,73 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
-use App\Models\Categorie;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
+use App\Http\Resources\ArticleResource;
+use App\Models\Category;
 use App\Repositories\Interfaces\ArticleRepositoryInterface;
 
 class ArticleController extends Controller
 {
-    public function __construct (public  ArticleRepositoryInterface $repository) {}
+    public function __construct(public  ArticleRepositoryInterface $repository)
+    {
+    }
 
-    // index method
     public function index()
     {
-        $Articles = $this->repository->index();
-        return response()->json($Articles);
+        $articles = $this->repository->index();
+        return response(new ArticleResource($articles));
     }
 
     // store method
     public function store(StoreArticleRequest $request)
     {
-        $Articles = $this->repository->store($request->all());
-        return response()->json($Articles);
+        $this->repository->store($request->validated());
+        return response(['message' => 'Article added succsessfully!'], 200);
     }
 
     // update method
-    public function update(UpdateArticleRequest $request, Article $Article)
+    public function update(UpdateArticleRequest $request, Article $article)
     {
-        $Articles = $this->repository->update($request->all(), $Article->id);
-        return response()->json($Articles);
+        $validated = $request->validated();
+        $this->repository->update($validated, $article->id);
+        return response(['message' => 'Article updated succsessfully!'], 200);
     }
 
     // destroy method
-    public function destroy(Article $Article)
+    public function destroy(Article $article)
     {
-        $Articles = $this->repository->destroy($Article->id);
-        return response()->json($Articles);
+        $this->repository->destroy($article->id);
+        return response(['message' => 'Article deleted succsessfully!'], 200);
     }
 
     // getLastestNews method
     public function getLatestNews()
     {
-        $Articles = $this->repository->getLatestNews();
-        return response()->json($Articles);
+        $articles = $this->repository->getLatestNews();
+        return response(new ArticleResource($articles));
     }
 
     // getArticlesByCategoryName
     public function getArticlesByCategoryName(Request $request)
     {
-        $nomCategorie = $request->input('nom_categorie');
-        $categorie = Categorie::where('name', $nomCategorie)->first();
-    
-        if ($categorie) {
-            $idsSousCategories = $categorie->obtenirSousCategorie($categorie->id);
-            array_unshift($idsSousCategories, $categorie->id);
+        $validated = $request->validate([
+            'category' => 'required|string',
+        ]);
+        $category = Category::where('name', $validated['category'])->first();
 
-            $articles = Article::whereIn('categorie_id', $idsSousCategories)
-                ->whereDate('date_debut', '<=', now())
-                ->whereDate('date_expiration', '>=', now())
+        if ($category) {
+            $children = $category->getCategoryChildren($category->id);
+            array_unshift($children, $category->id);
+
+            $articles = Article::whereIn('category_id', $children)
+                ->whereDate('expiration_date', '>=', now())
                 ->get();
-    
-            return response()->json($articles);
+
+            return response(new ArticleResource($articles));
         } else {
-            return response()->json(['message' => 'Catégorie non trouvée'], 404);
+            return response()->json(['message' => 'Category not found'], 404);
         }
     }
-    
-
 }

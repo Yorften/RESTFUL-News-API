@@ -22,11 +22,10 @@ class StoreArticleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'titre' => 'required',
-            'contenu' => 'required',
-            'categorie_id' => 'required',
-            'date_debut' => 'required',
-            'date_expiration' => 'required'
+            'title' => 'required|string',
+            'content' => 'required|string',
+            'category_id' => 'required|integer',
+            'expiration_date' => 'required|date'
         ];
     }
 }

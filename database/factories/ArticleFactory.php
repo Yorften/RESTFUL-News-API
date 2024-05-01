@@ -3,9 +3,8 @@
 namespace Database\Factories;
 
 use App\Models\Article;
-use App\Models\Categorie;
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 class ArticleFactory extends Factory
 {
@@ -23,13 +22,12 @@ class ArticleFactory extends Factory
      */
     public function definition()
     {
-        $id = Categorie::inRandomOrder()->pluck('id')->first();
+        $id = Category::inRandomOrder()->pluck('id')->first();
         return [
-            'Titre' => $this->faker->sentence,
-            'Contenu' => $this->faker->paragraph,
-            'Categorie_id' => $id, 
-            'Date_debut' => $this->faker->date(),
-            'Date_expiration' => $this->faker->date(),
+            'title' => $this->faker->sentence,
+            'content' => $this->faker->paragraph,
+            'category_id' => $id,
+            'expiration_date' => $this->faker->dateTimeBetween('-1 week', '+1 week'),
         ];
     }
 }

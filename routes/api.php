@@ -16,11 +16,19 @@ use App\Http\Controllers\UserController;
 |
 */
 
+Route::get('login', function () {
+    return response([
+        'message' => 'Unauthorized.'
+    ], 403);
+})->name('login');
+
 Route::middleware('auth:sanctum')->group(function () {
-    Route::resource('articles', ArticleController::class);
+
+    Route::apiResource('articles', ArticleController::class)->except('show');
+    Route::get('/articles/latest', [ArticleController::class, 'getLatestNews']);
+    Route::post('/articles/category', [ArticleController::class, 'getArticlesByCategoryName']);
+
     Route::post('/logout', [UserController::class, 'logout']);
-    Route::get('/latest-news', [ArticleController::class, 'getLatestNews']);
-    Route::post('/articles/categorie', [ArticleController::class, 'getArticlesByCategoryName']);
 });
 
 Route::post('/register', [UserController::class, 'register']);

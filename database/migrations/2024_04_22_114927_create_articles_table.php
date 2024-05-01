@@ -13,11 +13,10 @@ return new class extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
-            $table->string('titre');
-            $table->text('contenu');
-            $table->foreignId('categorie_id')->references( 'id' )->on( 'categories' );
-            $table->date('date_debut');
-            $table->date('date_expiration');
+            $table->string('title');
+            $table->text('content');
+            $table->foreignId('category_id')->constrained();
+            $table->date('expiration_date');
             $table->timestamps();
         });
     }

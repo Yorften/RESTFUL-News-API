@@ -1,0 +1,9 @@
+NEW API INSTRUCTIONS.
+
+1. Run `composer install` to install PHP dependencies.
+2. Create a `.env` file by copying `.env.example` and updating it with your environment variables, including database credentials.
+3. Run `php artisan key:generate` to generate an application key.
+4. Run `php artisan migrate` to migrate the database tables.
+5. Run `php artisan db:seed` to seed the database with sample data.
+6. Start the development server: php artisan serve.
+7. You can send requests now using Postman or any tool. 
